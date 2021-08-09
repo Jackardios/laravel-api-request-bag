@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 
 class InvalidIncludeQuery extends InvalidQuery
 {
-    /** @var \Illuminate\Support\Collection */
-    public $unknownIncludes;
-
-    /** @var \Illuminate\Support\Collection */
-    public $allowedIncludes;
+    public Collection $unknownIncludes;
+    public Collection $allowedIncludes;
 
     public function __construct(Collection $unknownIncludes, Collection $allowedIncludes)
     {

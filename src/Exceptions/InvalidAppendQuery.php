@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 
 class InvalidAppendQuery extends InvalidQuery
 {
-    /** @var \Illuminate\Support\Collection */
-    public $appendsNotAllowed;
-
-    /** @var \Illuminate\Support\Collection */
-    public $allowedAppends;
+    public Collection $appendsNotAllowed;
+    public Collection $allowedAppends;
 
     public function __construct(Collection $appendsNotAllowed, Collection $allowedAppends)
     {

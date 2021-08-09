@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 
 class InvalidFilterQuery extends InvalidQuery
 {
-    /** @var \Illuminate\Support\Collection */
-    public $unknownFilters;
-
-    /** @var \Illuminate\Support\Collection */
-    public $allowedFilters;
+    public Collection $unknownFilters;
+    public Collection $allowedFilters;
 
     public function __construct(Collection $unknownFilters, Collection $allowedFilters)
     {

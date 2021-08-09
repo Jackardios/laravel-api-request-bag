@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 
 class InvalidFieldQuery extends InvalidQuery
 {
-    /** @var \Illuminate\Support\Collection */
-    public $unknownFields;
-
-    /** @var \Illuminate\Support\Collection */
-    public $allowedFields;
+    public Collection $unknownFields;
+    public Collection $allowedFields;
 
     public function __construct(Collection $unknownFields, Collection $allowedFields)
     {

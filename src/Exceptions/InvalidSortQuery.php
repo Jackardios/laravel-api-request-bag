@@ -7,11 +7,8 @@ use Illuminate\Support\Collection;
 
 class InvalidSortQuery extends InvalidQuery
 {
-    /** @var \Illuminate\Support\Collection */
-    public $unknownSorts;
-
-    /** @var \Illuminate\Support\Collection */
-    public $allowedSorts;
+    public Collection $unknownSorts;
+    public Collection $allowedSorts;
 
     public function __construct(Collection $unknownSorts, Collection $allowedSorts)
     {
