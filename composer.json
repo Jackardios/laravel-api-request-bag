@@ -1,0 +1,64 @@
+{
+  "name": "jackardios/laravel-api-request-bag",
+  "description": "Laravel JSON API request bag",
+  "keywords": [
+    "jackardios",
+    "laravel-api-request-bag",
+    "laravel",
+    "json",
+    "api",
+    "request",
+    "bag"
+  ],
+  "homepage": "https://github.com/jackardios/laravel-api-request-bag",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/jackardios/laravel-api-request-bag/issues",
+    "source": "https://github.com/jackardios/laravel-api-request-bag"
+  },
+  "authors": [
+    {
+      "name": "Salavat Salakhutdinov",
+      "email": "salavat.salahutdinov@gmail.com",
+      "homepage": "https://github.com/jackardios"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "illuminate/http": "^6.20.13|7.30.4|^8.22.2",
+    "illuminate/support": "^6.20.13|7.30.4|^8.22.2"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "ext-json": "*",
+    "mockery/mockery": "^1.4",
+    "orchestra/testbench": "^6.19",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jackardios\\JsonApiRequest\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jackardios\\JsonApiRequest\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Jackardios\\JsonApiRequest\\JsonApiRequestServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
