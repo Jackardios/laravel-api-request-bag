@@ -63,7 +63,7 @@ trait WithFilters
     /**
      * @param $value
      *
-     * @return array|bool
+     * @return mixed
      */
     protected function getFilterValue($value)
     {
@@ -90,6 +90,10 @@ trait WithFilters
 
     protected function ensureAllFiltersExist(): self
     {
+        if (config('query-builder.disable_invalid_filter_query_exception')) {
+            return $this;
+        }
+
         $filterNames = $this->filters()->keys();
 
         $allowedFilterNames = $this->allowedFilters;

@@ -57,7 +57,7 @@ trait WithSorts
 
         return $this->requestedSorts;
     }
-    
+
     protected function ensureAllSortsExist(): self
     {
         $requestedSortNames = $this->sorts()->map(function (string $sort) {
