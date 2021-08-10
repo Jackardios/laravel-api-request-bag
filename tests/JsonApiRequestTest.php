@@ -7,7 +7,7 @@ use Jackardios\JsonApiRequest\JsonApiRequest;
 class JsonApiRequestTest extends TestCase
 {
     /** @test */
-    public function it_can_filter_nested_arrays()
+    public function it_can_filter_nested_arrays(): void
     {
         $expected = [
             'info' => [
@@ -25,7 +25,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_empty_filters_recursively()
+    public function it_can_get_empty_filters_recursively(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -49,7 +49,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_map_true_and_false_as_booleans_recursively()
+    public function it_will_map_true_and_false_as_booleans_recursively(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -77,7 +77,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_sort_query_param_from_the_request()
+    public function it_can_get_the_sort_query_param_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'sort' => 'foobar',
@@ -87,7 +87,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_sort_query_param_from_the_request_body()
+    public function it_can_get_the_sort_query_param_from_the_request_body(): void
     {
         config(['json-api-request.request_data_source' => 'body']);
 
@@ -99,7 +99,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_different_sort_query_parameter_name()
+    public function it_can_get_different_sort_query_parameter_name(): void
     {
         config(['json-api-request.parameters.sort' => 'sorts']);
 
@@ -111,7 +111,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_empty_collection_when_no_sort_query_param_is_specified()
+    public function it_will_return_an_empty_collection_when_no_sort_query_param_is_specified(): void
     {
         $request = new JsonApiRequest();
 
@@ -119,7 +119,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_multiple_sort_parameters_from_the_request()
+    public function it_can_get_multiple_sort_parameters_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'sort' => 'foo,bar',
@@ -131,7 +131,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_empty_collection_when_no_sort_query_params_are_specified()
+    public function it_will_return_an_empty_collection_when_no_sort_query_params_are_specified(): void
     {
         $request = new JsonApiRequest();
 
@@ -141,7 +141,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_filter_query_params_from_the_request()
+    public function it_can_get_the_filter_query_params_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -159,7 +159,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_filter_query_params_from_the_request_body()
+    public function it_can_get_the_filter_query_params_from_the_request_body(): void
     {
         config(['json-api-request.request_data_source' => 'body']);
 
@@ -179,7 +179,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_different_filter_query_parameter_name()
+    public function it_can_get_different_filter_query_parameter_name(): void
     {
         config(['json-api-request.parameters.filter' => 'filters']);
 
@@ -199,7 +199,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_empty_filters()
+    public function it_can_get_empty_filters(): void
     {
         config(['json-api-request.parameters.filter' => 'filters']);
 
@@ -219,7 +219,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_empty_collection_when_no_filter_query_params_are_specified()
+    public function it_will_return_an_empty_collection_when_no_filter_query_params_are_specified(): void
     {
         $request = new JsonApiRequest();
 
@@ -229,7 +229,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_map_true_and_false_as_booleans_when_given_in_a_filter_query_string()
+    public function it_will_map_true_and_false_as_booleans_when_given_in_a_filter_query_string(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -249,7 +249,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_map_comma_separated_values_as_arrays_when_given_in_a_filter_query_string()
+    public function it_will_map_comma_separated_values_as_arrays_when_given_in_a_filter_query_string(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -263,7 +263,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_map_array_in_filter_recursively_when_given_in_a_filter_query_string()
+    public function it_will_map_array_in_filter_recursively_when_given_in_a_filter_query_string(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -280,7 +280,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_map_comma_separated_values_as_arrays_when_given_in_a_filter_query_string_and_get_those_by_key()
+    public function it_will_map_comma_separated_values_as_arrays_when_given_in_a_filter_query_string_and_get_those_by_key(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -294,7 +294,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_include_query_params_from_the_request()
+    public function it_can_get_the_include_query_params_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'include' => 'foo,bar',
@@ -306,7 +306,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_include_from_the_request_body()
+    public function it_can_get_the_include_from_the_request_body(): void
     {
         config(['json-api-request.request_data_source' => 'body']);
 
@@ -320,7 +320,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_different_include_query_parameter_name()
+    public function it_can_get_different_include_query_parameter_name(): void
     {
         config(['json-api-request.parameters.include' => 'includes']);
 
@@ -334,7 +334,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_empty_collection_when_no_include_query_params_are_specified()
+    public function it_will_return_an_empty_collection_when_no_include_query_params_are_specified(): void
     {
         $request = new JsonApiRequest();
 
@@ -344,7 +344,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_requested_fields()
+    public function it_can_get_requested_fields(): void
     {
         $request = new JsonApiRequest([
             'fields' => [
@@ -358,7 +358,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_requested_fields_from_the_request_body()
+    public function it_can_get_requested_fields_from_the_request_body(): void
     {
         config(['json-api-request.request_data_source' => 'body']);
 
@@ -374,7 +374,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_different_fields_parameter_name()
+    public function it_can_get_different_fields_parameter_name(): void
     {
         config(['json-api-request.parameters.fields' => 'field']);
 
@@ -390,7 +390,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_append_query_params_from_the_request()
+    public function it_can_get_the_append_query_params_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'append' => 'foo,bar',
@@ -402,7 +402,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_different_append_query_parameter_name()
+    public function it_can_get_different_append_query_parameter_name(): void
     {
         config(['json-api-request.parameters.append' => 'appendit']);
 
@@ -416,7 +416,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_will_return_an_empty_collection_when_no_append_query_params_are_specified()
+    public function it_will_return_an_empty_collection_when_no_append_query_params_are_specified(): void
     {
         $request = new JsonApiRequest();
 
@@ -426,7 +426,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_the_append_query_params_from_the_request_body()
+    public function it_can_get_the_append_query_params_from_the_request_body(): void
     {
         config(['json-api-request.request_data_source' => 'body']);
 
@@ -440,7 +440,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_takes_custom_delimiters_for_splitting_request_parameters()
+    public function it_takes_custom_delimiters_for_splitting_request_parameters(): void
     {
         $request = new JsonApiRequest([
             'filter' => [
@@ -456,7 +456,7 @@ class JsonApiRequestTest extends TestCase
     }
 
     /** @test */
-    public function it_adds_any_appends_as_they_come_from_the_request()
+    public function it_adds_any_appends_as_they_come_from_the_request(): void
     {
         $request = new JsonApiRequest([
             'append' => 'aCamelCaseAppend,anotherappend',
