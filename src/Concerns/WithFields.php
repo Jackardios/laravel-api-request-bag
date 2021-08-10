@@ -60,7 +60,7 @@ trait WithFields
             return $this->requestedFields;
         }
 
-        $fieldsParameterName = config('api-request-bag.parameters.fields');
+        $fieldsParameterName = config('json-api-request.parameters.fields');
         $fieldsPerTable = collect($this->getRequestData($fieldsParameterName));
 
         if ($fieldsPerTable->isEmpty()) {
@@ -69,7 +69,10 @@ trait WithFields
 
         $this->requestedFields = $fieldsPerTable
             ->map(function ($fields): array {
-                return array_unique(explode(static::getFieldsArrayValueDelimiter(), $fields));
+                if (is_string($fields)) {
+                    $fields = explode(static::getFieldsArrayValueDelimiter(), $fields);
+                }
+                return array_unique($fields);
             })
             ->filter();
 

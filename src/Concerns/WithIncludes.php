@@ -44,7 +44,7 @@ trait WithIncludes
             return $this->requestedIncludes;
         }
 
-        $includeParameterName = config('api-request-bag.parameters.include');
+        $includeParameterName = config('json-api-request.parameters.include');
         $includeParts = $this->getRequestData($includeParameterName);
 
         if (is_string($includeParts)) {

@@ -46,7 +46,7 @@ trait WithFilters
             return $this->requestedFilters;
         }
 
-        $filterParameterName = config('api-request-bag.parameters.filter');
+        $filterParameterName = config('json-api-request.parameters.filter');
         $filterParts = $this->getRequestData($filterParameterName, []);
 
         if (is_string($filterParts)) {
@@ -90,7 +90,7 @@ trait WithFilters
 
     protected function ensureAllFiltersExist(): self
     {
-        if (config('query-builder.disable_invalid_filter_query_exception')) {
+        if (config('json-api-request.disable_invalid_filter_query_exception')) {
             return $this;
         }
 

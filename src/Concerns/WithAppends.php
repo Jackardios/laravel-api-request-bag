@@ -44,7 +44,7 @@ trait WithAppends
             return $this->requestedAppends;
         }
 
-        $appendParameterName = config('api-request-bag.parameters.append');
+        $appendParameterName = config('json-api-request.parameters.append');
         $appendParts = $this->getRequestData($appendParameterName);
 
         if (is_string($appendParts)) {

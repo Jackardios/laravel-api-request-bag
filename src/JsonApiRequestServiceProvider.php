@@ -10,11 +10,11 @@ class JsonApiRequestServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole() && function_exists('config_path')) {
             $this->publishes([
-                __DIR__.'/../config/api-request-bag.php' => config_path('api-request-bag.php'),
+                __DIR__ . '/../config/json-api-request.php' => config_path('json-api-request.php'),
             ], 'config');
         }
 
-        $this->mergeConfigFrom(__DIR__.'/../config/api-request-bag.php', 'api-request-bag');
+        $this->mergeConfigFrom(__DIR__ . '/../config/json-api-request.php', 'json-api-request');
     }
 
     public function register()

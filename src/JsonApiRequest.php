@@ -25,7 +25,7 @@ class JsonApiRequest extends FormRequest
 
     protected function getRequestData(?string $key = null, $default = null)
     {
-        if (config('api-request-bag.request_data_source') === 'body') {
+        if (config('json-api-request.request_data_source') === 'body') {
             return $this->input($key, $default);
         }
 

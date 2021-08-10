@@ -44,7 +44,7 @@ trait WithSorts
             return $this->requestedSorts;
         }
 
-        $sortParameterName = config('api-request-bag.parameters.sort');
+        $sortParameterName = config('json-api-request.parameters.sort');
         $sortParts = $this->getRequestData($sortParameterName);
 
         if (is_string($sortParts)) {
