@@ -8,8 +8,8 @@ use Jackardios\JsonApiRequest\Exceptions\InvalidFilterQuery;
 
 trait WithFilters
 {
-    protected ?Collection $requestedFilters;
-    protected ?Collection $allowedFilters;
+    protected ?Collection $requestedFilters = null;
+    protected ?Collection $allowedFilters = null;
 
     private static string $filtersArrayValueDelimiter = ',';
 

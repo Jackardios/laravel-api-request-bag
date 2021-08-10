@@ -9,8 +9,8 @@ use Jackardios\JsonApiRequest\Exceptions\DefaultTableIsNotDefined;
 
 trait WithFields
 {
-    protected ?Collection $requestedFields;
-    protected ?Collection $allowedFields;
+    protected ?Collection $requestedFields = null;
+    protected ?Collection $allowedFields = null;
 
     protected ?string $defaultTable;
 

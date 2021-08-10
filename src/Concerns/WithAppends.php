@@ -7,8 +7,8 @@ use Jackardios\JsonApiRequest\Exceptions\InvalidAppendQuery;
 
 trait WithAppends
 {
-    protected ?Collection $requestedAppends;
-    protected ?Collection $allowedAppends;
+    protected ?Collection $requestedAppends = null;
+    protected ?Collection $allowedAppends = null;
 
     private static string $appendsArrayValueDelimiter = ',';
 

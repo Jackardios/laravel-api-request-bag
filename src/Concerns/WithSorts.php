@@ -7,8 +7,8 @@ use Jackardios\JsonApiRequest\Exceptions\InvalidSortQuery;
 
 trait WithSorts
 {
-    protected ?Collection $requestedSorts;
-    protected ?Collection $allowedSorts;
+    protected ?Collection $requestedSorts = null;
+    protected ?Collection $allowedSorts = null;
 
     private static string $sortsArrayValueDelimiter = ',';
 

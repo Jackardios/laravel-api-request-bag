@@ -7,8 +7,8 @@ use Jackardios\JsonApiRequest\Exceptions\InvalidIncludeQuery;
 
 trait WithIncludes
 {
-    protected ?Collection $requestedIncludes;
-    protected ?Collection $allowedIncludes;
+    protected ?Collection $requestedIncludes = null;
+    protected ?Collection $allowedIncludes = null;
 
     private static string $includesArrayValueDelimiter = ',';
 
