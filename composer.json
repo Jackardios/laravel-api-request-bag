@@ -1,20 +1,19 @@
 {
-  "name": "jackardios/laravel-api-request-bag",
-  "description": "Laravel JSON API request bag",
+  "name": "jackardios/laravel-json-api-request",
+  "description": "Laravel JSON API api request",
   "keywords": [
     "jackardios",
-    "laravel-api-request-bag",
+    "laravel-json-api-request",
     "laravel",
     "json",
     "api",
-    "request",
-    "bag"
+    "request"
   ],
-  "homepage": "https://github.com/jackardios/laravel-api-request-bag",
+  "homepage": "https://github.com/jackardios/laravel-json-api-request",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/jackardios/laravel-api-request-bag/issues",
-    "source": "https://github.com/jackardios/laravel-api-request-bag"
+    "issues": "https://github.com/jackardios/laravel-json-api-request/issues",
+    "source": "https://github.com/jackardios/laravel-json-api-request"
   },
   "authors": [
     {
