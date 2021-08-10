@@ -2,6 +2,7 @@
 
 namespace Jackardios\JsonApiRequest;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Jackardios\JsonApiRequest\Concerns\WithFields;
 use Jackardios\JsonApiRequest\Concerns\WithFilters;
@@ -9,7 +10,7 @@ use Jackardios\JsonApiRequest\Concerns\WithIncludes;
 use Jackardios\JsonApiRequest\Concerns\WithAppends;
 use Jackardios\JsonApiRequest\Concerns\WithSorts;
 
-class JsonApiRequest extends Request
+class JsonApiRequest extends FormRequest
 {
     use WithFields;
     use WithIncludes;
