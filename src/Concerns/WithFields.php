@@ -72,7 +72,11 @@ trait WithFields
                 if (is_string($fields)) {
                     $fields = explode(static::getFieldsArrayValueDelimiter(), $fields);
                 }
-                return array_unique($fields);
+                return collect($fields)
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->toArray();
             })
             ->filter();
 
