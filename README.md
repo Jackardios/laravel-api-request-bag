@@ -146,3 +146,127 @@ $sorts = $request->sorts();
 $includes = $request->includes();
 $appends = $request->appends();
 ```
+
+## Examples
+### Filters
+#### Get filters query parameters
+```
+GET /users?filter[name]=John&filter[email]=example@email.com,another@email.com&filter[is_admin]=true
+```
+
+```php
+use App\Models\User;
+use Jackardios\JsonApiRequest\JsonApiRequest;
+
+$query = User::query();
+$request = app(JsonApiRequest::class)
+    ->setAllowedFilters('name', 'email', 'is_admin');
+    
+$request->filters()->each(function ($value, $field) use ($query) {
+    $query->where($field, $value);
+});
+
+$filteredUsers = $query->get();
+```
+
+#### Trying to use unallowed fields throws HTTP 400 Bad Request exception
+```
+GET /users?filter[name]=John&&filter[secret]=secret
+```
+
+```php
+use Jackardios\JsonApiRequest\JsonApiRequest;
+
+$request = app(JsonApiRequest::class)
+    ->setAllowedFilters('name', 'email')
+    ->filters();
+    
+// throws HTTP 400 Bad Request exception
+```
+
+### Sorts
+#### Get sorts query parameters
+```
+GET /users?sort=id,-name
+```
+
+```php
+use App\Models\User;
+use Jackardios\JsonApiRequest\JsonApiRequest;
+use Jackardios\JsonApiRequest\Values\Sort;
+
+$query = User::query();
+$request = app(JsonApiRequest::class)
+    ->setAllowedSorts('id', 'name', 'email', 'is_admin');
+    
+$request->sorts()->each(function (Sort $sort) use ($query) {
+    $query->orderBy($sort->getField(), $sort->getDirection());
+});
+
+$filteredUsers = $query->get();
+```
+
+### Select fields
+#### Get fields query parameters
+```
+GET /users?fields=id,name,is_admin
+```
+
+```php
+use App\Models\User;
+use Jackardios\JsonApiRequest\JsonApiRequest;
+
+$query = User::query();
+$request = app(JsonApiRequest::class)
+    ->setAllowedFields('id', 'name', 'email', 'is_admin');
+    
+if ($request->fields()->isNotEmpty()) {
+    $query->select($request->fields()->toArray());
+}
+
+$filteredUsers = $query->get();
+```
+
+### Include relationships
+#### Get include query parameters
+```
+GET /users?include=friends,roles
+```
+
+```php
+use App\Models\User;
+use Jackardios\JsonApiRequest\JsonApiRequest;
+
+$query = User::query();
+$request = app(JsonApiRequest::class)
+    ->setAllowedIncludes('roles', 'friends');
+    
+if ($request->includes()->isNotEmpty()) {
+    $query->with($request->includes()->toArray());
+}
+
+$filteredUsers = $query->get();
+```
+
+### Append attributes
+#### Get append query parameters
+```
+GET /users?append=full_name
+```
+
+```php
+use App\Models\User;
+use Jackardios\JsonApiRequest\JsonApiRequest;
+
+$users = User::all();
+$request = app(JsonApiRequest::class)
+    ->setAllowedAppends('full_name');
+    
+if ($request->appends()->isNotEmpty()) {
+    $users->each(function (User $user) use ($request) {
+        return $user->append($request->appends()->toArray());
+    })
+}
+
+$filteredUsers = $query->get();
+```
