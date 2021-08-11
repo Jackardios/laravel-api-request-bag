@@ -209,7 +209,7 @@ $filteredUsers = $query->get();
 ### Select fields
 #### Get fields query parameters
 ```
-GET /users?fields=id,name,is_admin
+GET /users?fields[users]=id,name,is_admin
 ```
 
 ```php
@@ -219,9 +219,10 @@ use Jackardios\JsonApiRequest\JsonApiRequest;
 $query = User::query();
 $request = app(JsonApiRequest::class)
     ->setAllowedFields('id', 'name', 'email', 'is_admin');
-    
-if ($request->fields()->isNotEmpty()) {
-    $query->select($request->fields()->toArray());
+   
+$requestedUserFields = $request->fields()->get('users');
+if (!empty($requestedUserFields)) {
+    $query->select($requestedUserFields);
 }
 
 $filteredUsers = $query->get();
