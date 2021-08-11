@@ -12,7 +12,7 @@ trait WithFields
     protected ?Collection $requestedFields = null;
     protected ?Collection $allowedFields = null;
 
-    protected ?string $defaultTable;
+    protected ?string $defaultTable = null;
 
     private static string $fieldsArrayValueDelimiter = ',';
 
