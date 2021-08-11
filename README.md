@@ -275,7 +275,7 @@ use Jackardios\JsonApiRequest\JsonApiRequest;
 
 $users = User::all();
 $request = app(JsonApiRequest::class)
-    ->setAllowedAppends('full_name');
+    ->setAllowedAppends('full_name', 'another_attribute');
     
 if ($request->appends()->isNotEmpty()) {
     $users->each(function (User $user) use ($request) {
