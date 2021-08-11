@@ -31,16 +31,6 @@ class JsonApiRequest extends FormRequest
         static::$fieldsArrayValueDelimiter = $delimiter;
         static::$sortsArrayValueDelimiter = $delimiter;
     }
-    /**
-     * Validate the class instance.
-     *
-     * @return void
-     */
-    public function validateResolved(): void
-    {
-        parent::validateResolved();
-        dd('tttestsetsetsetestse');
-    }
 
     protected function getRequestData(?string $key = null, $default = null)
     {
