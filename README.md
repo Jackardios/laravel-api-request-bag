@@ -3,6 +3,7 @@ This package will help you filter and prepare request parameters
 (parameter names correspond to [JSON API specification](https://jsonapi.org/)).
 
 Much of this package comes from [spatie/laravel-query-builder](https://github.com/spatie/laravel-query-builder), but unlike it, this package gives you complete control over how your queries are handled.
+You can build any queries regardless of which query builder you are using Eloquent or Scout.
 
 ## Installation
 1) Install the package via composer:
