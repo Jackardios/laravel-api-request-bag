@@ -45,7 +45,7 @@ trait WithFields
                 return $this->prependField($fieldName);
             });
 
-        $this->ensureAllFieldsExist();
+        $this->ensureAllFieldsAllowed();
 
         return $this;
     }
@@ -79,7 +79,7 @@ trait WithFields
         return $this->requestedFields;
     }
 
-    protected function ensureAllFieldsExist(): self
+    protected function ensureAllFieldsAllowed(): self
     {
         $requestedFields = $this->fields()
             ->map(function ($fields, $model) {

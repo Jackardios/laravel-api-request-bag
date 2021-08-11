@@ -31,7 +31,7 @@ trait WithFilters
             ->filter()
             ->unique();
 
-        $this->ensureAllFiltersExist();
+        $this->ensureAllFiltersAllowed();
 
         return $this;
     }
@@ -88,7 +88,7 @@ trait WithFilters
         return $value;
     }
 
-    protected function ensureAllFiltersExist(): self
+    protected function ensureAllFiltersAllowed(): self
     {
         if (config('json-api-request.disable_invalid_filter_query_exception')) {
             return $this;

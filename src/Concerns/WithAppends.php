@@ -30,7 +30,7 @@ trait WithAppends
             ->filter()
             ->unique();
 
-        $this->ensureAllAppendsExist();
+        $this->ensureAllAppendsAllowed();
 
         return $this;
     }
@@ -58,7 +58,7 @@ trait WithAppends
         return $this->requestedAppends;
     }
 
-    protected function ensureAllAppendsExist(): self
+    protected function ensureAllAppendsAllowed(): self
     {
         $appends = $this->appends();
 

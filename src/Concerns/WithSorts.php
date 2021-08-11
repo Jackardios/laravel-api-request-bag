@@ -30,7 +30,7 @@ trait WithSorts
             ->filter()
             ->unique();
 
-        $this->ensureAllSortsExist();
+        $this->ensureAllSortsAllowed();
 
         return $this;
     }
@@ -58,7 +58,7 @@ trait WithSorts
         return $this->requestedSorts;
     }
 
-    protected function ensureAllSortsExist(): self
+    protected function ensureAllSortsAllowed(): self
     {
         $requestedSortNames = $this->sorts()->map(function (string $sort) {
             return ltrim($sort, '-');

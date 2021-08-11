@@ -30,7 +30,7 @@ trait WithIncludes
             ->filter()
             ->unique();
 
-        $this->ensureAllIncludesExist();
+        $this->ensureAllIncludesAllowed();
 
         return $this;
     }
@@ -58,7 +58,7 @@ trait WithIncludes
         return $this->requestedIncludes;
     }
 
-    protected function ensureAllIncludesExist(): self
+    protected function ensureAllIncludesAllowed(): self
     {
         $includes = $this->includes();
 
