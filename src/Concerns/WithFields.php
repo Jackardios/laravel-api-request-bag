@@ -26,6 +26,11 @@ trait WithFields
         return static::$fieldsArrayValueDelimiter;
     }
 
+    protected function defaultTable(): string
+    {
+        return "";
+    }
+
     public function setDefaultTable(string $table): self
     {
         $this->defaultTable = $table;
@@ -136,7 +141,11 @@ trait WithFields
         if (!$table) {
             $table = $this->getDefaultTable();
             if (!$table) {
-                throw new DefaultTableIsNotDefined();
+                $defaultTableFromCallback = $this->defaultTable();
+                if (!$defaultTableFromCallback) {
+                    throw new DefaultTableIsNotDefined();
+                }
+                $this->setDefaultTable($defaultTableFromCallback);
             }
         }
 
