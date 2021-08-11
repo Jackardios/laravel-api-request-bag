@@ -1,10 +1,16 @@
 <?php
+
 namespace Jackardios\JsonApiRequest\Tests\TestClasses\Requests;
 
 use Jackardios\JsonApiRequest\JsonApiRequest;
 
 class ExampleJsonApiRequest extends JsonApiRequest
 {
+    protected function defaultTable(): string
+    {
+        return 'example_table';
+    }
+
     protected function allowedFilters(): array
     {
         return ['id', 'name', 'email'];
