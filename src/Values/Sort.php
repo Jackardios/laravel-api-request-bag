@@ -13,7 +13,7 @@ class Sort
     {
         $this->field = ltrim($field, '-');
         if ($direction) {
-            $this->direction = $direction === 'desc' ? 'desc' : 'asc';
+            $this->direction = $direction === SortDirection::DESCENDING ? SortDirection::DESCENDING : SortDirection::ASCENDING;
         } else {
             $this->direction = self::parseSortDirection($field);
         }
