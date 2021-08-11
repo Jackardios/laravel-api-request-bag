@@ -229,10 +229,10 @@ if (!empty($requestedUserFields)) {
 $filteredUsers = $query->get();
 ```
 
-### Include relationships
+### Include relationships and select fields
 #### Get include query parameters
 ```
-GET /users?include=friends,roles
+GET /users?include=friends,roles&fields[roles]=id,name,display_name
 ```
 
 ```php
@@ -243,8 +243,21 @@ $query = User::query();
 $request = app(JsonApiRequest::class)
     ->setAllowedIncludes('roles', 'friends');
     
-if ($request->includes()->isNotEmpty()) {
-    $query->with($request->includes()->toArray());
+$includes = $request->includes();
+if ($includes->isNotEmpty()) {
+    $withs = $includes->mapWithKeys(function($table) use ($request) {
+        $fields = $request->fields()->get($table) ?? [];
+        
+        return [$table => $fields];
+    })->toArray();
+    
+    // $withs is equal to
+    // [
+    //     'roles' => ['id','name','display_name']
+    //     'friends' => []
+    // ]
+
+    $query->with($withs);
 }
 
 $filteredUsers = $query->get();
@@ -253,7 +266,7 @@ $filteredUsers = $query->get();
 ### Append attributes
 #### Get append query parameters
 ```
-GET /users?append=full_name
+GET /users?append=full_name,another_attribute
 ```
 
 ```php
