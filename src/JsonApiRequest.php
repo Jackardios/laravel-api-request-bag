@@ -23,13 +23,34 @@ class JsonApiRequest extends FormRequest
         return static::createFrom($request, new self());
     }
 
-    protected function getRequestData(?string $key = null, $default = null)
+    /**
+     * Validate the class instance.
+     *
+     * @return void
+     */
+    public function validateResolved(): void
     {
-        if (config('json-api-request.request_data_source') === 'body') {
-            return $this->input($key, $default);
+        parent::validateResolved();
+
+        if (method_exists($this, 'allowedAppends')) {
+            $this->setAllowedAppends($this->allowedAppends());
         }
 
-        return $this->query($key, $default);
+        if (method_exists($this, 'allowedFields')) {
+            $this->setAllowedFields($this->allowedFields());
+        }
+
+        if (method_exists($this, 'allowedFilters')) {
+            $this->setAllowedFilters($this->allowedFilters());
+        }
+
+        if (method_exists($this, 'allowedIncludes')) {
+            $this->setAllowedIncludes($this->allowedIncludes());
+        }
+
+        if (method_exists($this, 'allowedSorts')) {
+            $this->setAllowedSorts($this->allowedSorts());
+        }
     }
 
     public static function setArrayValueDelimiter(string $delimiter): void
@@ -39,5 +60,14 @@ class JsonApiRequest extends FormRequest
         static::$appendsArrayValueDelimiter = $delimiter;
         static::$fieldsArrayValueDelimiter = $delimiter;
         static::$sortsArrayValueDelimiter = $delimiter;
+    }
+
+    protected function getRequestData(?string $key = null, $default = null)
+    {
+        if (config('json-api-request.request_data_source') === 'body') {
+            return $this->input($key, $default);
+        }
+
+        return $this->query($key, $default);
     }
 }
