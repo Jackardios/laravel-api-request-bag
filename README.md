@@ -89,35 +89,40 @@ class ListUsersRequest extends JsonApiRequest
     {
         return ['id', 'name', 'email'];
     }
-    
+
     protected function allowedFields(): array
     {
-        return ['id', 'name', 'email', 'is_admin', 'created_at', 'updated_at'];
+        return [
+            'id',
+            'name',
+            'email',
+            'is_admin',
+            'created_at',
+            'updated_at',
+            'another_table.title',
+            'another_table.content',
+            'another_table.created_at',
+        ];
     }
-    
+
     protected function allowedSorts(): array
     {
         return ['id', 'name', 'created_at', 'updated_at'];
     }
-    
+
     protected function allowedIncludes(): array
     {
-        return ['friends'];
+        return ['friends', 'roles'];
     }
-    
+
     protected function allowedAppends(): array
     {
-        return ['full_name'];
+        return ['full_name', 'another_attribute'];
     }
-    
+
     // You can use it like FormRequest and define any of its methods
-    
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules(): array 
+
+    public function rules(): array
     {
         return [
             'appends' => 'nullable|array',
@@ -136,6 +141,8 @@ class ListUsersRequest extends JsonApiRequest
             'another_parameter' => 'nullable|string'
         ];
     }
+
+    // ...
 }
 
 $request = app(ListUsersRequest::class);
