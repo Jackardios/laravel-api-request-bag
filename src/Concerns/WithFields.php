@@ -26,14 +26,31 @@ trait WithFields
         return static::$fieldsArrayValueDelimiter;
     }
 
-    public function setDefaultTable(string $table): self {
+    public function setDefaultTable(string $table): self
+    {
         $this->defaultTable = $table;
 
         return $this;
     }
 
-    public function getDefaultTable(): ?string {
+    public function getDefaultTable(): ?string
+    {
         return $this->defaultTable;
+    }
+
+    protected function allowedFields(): array
+    {
+        return [];
+    }
+
+    protected function setAllowedFieldsFromCallbackIfNotDefined(): self
+    {
+        $allowedFieldsFromCallback = $this->allowedFields();
+        if (!($this->allowedFields instanceof Collection) && $allowedFieldsFromCallback) {
+            $this->setAllowedFields($allowedFieldsFromCallback);
+        }
+
+        return $this;
     }
 
     public function setAllowedFields($fields): self
@@ -50,12 +67,15 @@ trait WithFields
         return $this;
     }
 
-    public function getAllowedFields(): ?Collection {
+    public function getAllowedFields(): ?Collection
+    {
         return $this->allowedFields;
     }
 
     public function fields(): Collection
     {
+        $this->setAllowedFieldsFromCallbackIfNotDefined();
+
         if ($this->requestedFields) {
             return $this->requestedFields;
         }

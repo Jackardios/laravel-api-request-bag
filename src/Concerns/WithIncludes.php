@@ -22,6 +22,21 @@ trait WithIncludes
         return static::$includesArrayValueDelimiter;
     }
 
+    protected function allowedIncludes(): array
+    {
+        return [];
+    }
+
+    protected function setAllowedIncludesFromCallbackIfNotDefined(): self
+    {
+        $allowedIncludesFromCallback = $this->allowedIncludes();
+        if (!($this->allowedIncludes instanceof Collection) && $allowedIncludesFromCallback) {
+            $this->setAllowedIncludes($allowedIncludesFromCallback);
+        }
+
+        return $this;
+    }
+
     public function setAllowedIncludes($includes): self
     {
         $includes = is_array($includes) ? $includes : func_get_args();
@@ -35,11 +50,15 @@ trait WithIncludes
         return $this;
     }
 
-    public function getAllowedIncludes(): ?Collection {
+    public function getAllowedIncludes(): ?Collection
+    {
         return $this->allowedIncludes;
     }
 
-    public function includes(): Collection {
+    public function includes(): Collection
+    {
+        $this->setAllowedIncludesFromCallbackIfNotDefined();
+
         if ($this->requestedIncludes) {
             return $this->requestedIncludes;
         }

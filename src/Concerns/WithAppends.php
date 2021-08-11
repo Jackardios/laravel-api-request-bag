@@ -22,6 +22,21 @@ trait WithAppends
         return static::$appendsArrayValueDelimiter;
     }
 
+    protected function allowedAppends(): array
+    {
+        return [];
+    }
+
+    protected function setAllowedAppendsFromCallbackIfNotDefined(): self
+    {
+        $allowedAppendsFromCallback = $this->allowedAppends();
+        if (!($this->allowedAppends instanceof Collection) && $allowedAppendsFromCallback) {
+            $this->setAllowedAppends($allowedAppendsFromCallback);
+        }
+
+        return $this;
+    }
+
     public function setAllowedAppends($appends): self
     {
         $appends = is_array($appends) ? $appends : func_get_args();
@@ -35,11 +50,15 @@ trait WithAppends
         return $this;
     }
 
-    public function getAllowedAppends(): ?Collection {
+    public function getAllowedAppends(): ?Collection
+    {
         return $this->allowedAppends;
     }
 
-    public function appends(): Collection {
+    public function appends(): Collection
+    {
+        $this->setAllowedAppendsFromCallbackIfNotDefined();
+
         if ($this->requestedAppends) {
             return $this->requestedAppends;
         }

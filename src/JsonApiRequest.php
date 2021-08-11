@@ -23,6 +23,14 @@ class JsonApiRequest extends FormRequest
         return static::createFrom($request, new self());
     }
 
+    public static function setArrayValueDelimiter(string $delimiter): void
+    {
+        static::$filtersArrayValueDelimiter = $delimiter;
+        static::$includesArrayValueDelimiter = $delimiter;
+        static::$appendsArrayValueDelimiter = $delimiter;
+        static::$fieldsArrayValueDelimiter = $delimiter;
+        static::$sortsArrayValueDelimiter = $delimiter;
+    }
     /**
      * Validate the class instance.
      *
@@ -31,35 +39,7 @@ class JsonApiRequest extends FormRequest
     public function validateResolved(): void
     {
         parent::validateResolved();
-
-        if (method_exists($this, 'allowedAppends')) {
-            $this->setAllowedAppends($this->allowedAppends());
-        }
-
-        if (method_exists($this, 'allowedFields')) {
-            $this->setAllowedFields($this->allowedFields());
-        }
-
-        if (method_exists($this, 'allowedFilters')) {
-            $this->setAllowedFilters($this->allowedFilters());
-        }
-
-        if (method_exists($this, 'allowedIncludes')) {
-            $this->setAllowedIncludes($this->allowedIncludes());
-        }
-
-        if (method_exists($this, 'allowedSorts')) {
-            $this->setAllowedSorts($this->allowedSorts());
-        }
-    }
-
-    public static function setArrayValueDelimiter(string $delimiter): void
-    {
-        static::$filtersArrayValueDelimiter = $delimiter;
-        static::$includesArrayValueDelimiter = $delimiter;
-        static::$appendsArrayValueDelimiter = $delimiter;
-        static::$fieldsArrayValueDelimiter = $delimiter;
-        static::$sortsArrayValueDelimiter = $delimiter;
+        dd('tttestsetsetsetestse');
     }
 
     protected function getRequestData(?string $key = null, $default = null)

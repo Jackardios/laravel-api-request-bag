@@ -23,6 +23,21 @@ trait WithFilters
         return static::$filtersArrayValueDelimiter;
     }
 
+    protected function allowedFilters(): array
+    {
+        return [];
+    }
+
+    protected function setAllowedFiltersFromCallbackIfNotDefined(): self
+    {
+        $allowedFiltersFromCallback = $this->allowedFilters();
+        if (!($this->allowedFilters instanceof Collection) && $allowedFiltersFromCallback) {
+            $this->setAllowedFilters($allowedFiltersFromCallback);
+        }
+
+        return $this;
+    }
+
     public function setAllowedFilters($filters): self
     {
         $filters = is_array($filters) ? $filters : func_get_args();
@@ -36,12 +51,15 @@ trait WithFilters
         return $this;
     }
 
-    public function getAllowedFilters(): ?Collection {
+    public function getAllowedFilters(): ?Collection
+    {
         return $this->allowedFilters;
     }
 
     public function filters(): Collection
     {
+        $this->setAllowedFiltersFromCallbackIfNotDefined();
+
         if ($this->requestedFilters) {
             return $this->requestedFilters;
         }

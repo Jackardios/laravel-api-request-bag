@@ -23,6 +23,21 @@ trait WithSorts
         return static::$sortsArrayValueDelimiter;
     }
 
+    protected function allowedSorts(): array
+    {
+        return [];
+    }
+
+    protected function setAllowedSortsFromCallbackIfNotDefined(): self
+    {
+        $allowedSortsFromCallback = $this->allowedSorts();
+        if (!($this->allowedSorts instanceof Collection) && $allowedSortsFromCallback) {
+            $this->setAllowedSorts($allowedSortsFromCallback);
+        }
+
+        return $this;
+    }
+
     public function setAllowedSorts($sorts): self
     {
         $sorts = is_array($sorts) ? $sorts : func_get_args();
@@ -36,11 +51,15 @@ trait WithSorts
         return $this;
     }
 
-    public function getAllowedSorts(): ?Collection {
+    public function getAllowedSorts(): ?Collection
+    {
         return $this->allowedSorts;
     }
 
-    public function sorts(): Collection {
+    public function sorts(): Collection
+    {
+        $this->setAllowedSortsFromCallbackIfNotDefined();
+
         if ($this->requestedSorts) {
             return $this->requestedSorts;
         }
