@@ -26,6 +26,11 @@ trait WithFields
         return static::$fieldsArrayValueDelimiter;
     }
 
+    /**
+     * 'defaultTable' is used as a default table for allowed fields
+     *
+     * @return string
+     */
     protected function defaultTable(): string
     {
         return "";
