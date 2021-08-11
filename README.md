@@ -85,6 +85,16 @@ use Jackardios\JsonApiRequest\JsonApiRequest;
 
 class ListUsersRequest extends JsonApiRequest
 {
+    /**
+     * 'defaultTable' is used as a default table for allowed fields
+     *
+     * @return string
+     */
+    protected function defaultTable(): string
+    {
+        return 'users';
+    }
+    
     protected function allowedFilters(): array
     {
         return ['id', 'name', 'email'];
