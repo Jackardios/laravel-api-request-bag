@@ -53,7 +53,8 @@ trait WithSorts
 
         $this->requestedSorts = collect($sortParts)
             ->filter()
-            ->unique();
+            ->unique()
+            ->values();
 
         return $this->requestedSorts;
     }

@@ -53,7 +53,8 @@ trait WithIncludes
 
         $this->requestedIncludes = collect($includeParts)
             ->filter()
-            ->unique();
+            ->unique()
+            ->values();
 
         return $this->requestedIncludes;
     }

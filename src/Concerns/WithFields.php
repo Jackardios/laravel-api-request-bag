@@ -88,7 +88,8 @@ trait WithFields
                 return $this->prependFieldsWithTableName($fields, $tableName);
             })
             ->flatten()
-            ->unique();
+            ->unique()
+            ->values();
 
         $unknownFields = $requestedFields->diff($this->allowedFields);
 

@@ -53,7 +53,8 @@ trait WithAppends
 
         $this->requestedAppends = collect($appendParts)
             ->filter()
-            ->unique();
+            ->unique()
+            ->values();
 
         return $this->requestedAppends;
     }
