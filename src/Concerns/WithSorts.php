@@ -3,7 +3,6 @@
 namespace Jackardios\JsonApiRequest\Concerns;
 
 use Illuminate\Support\Collection;
-use Jackardios\JsonApiRequest\Enums\SortDirection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidSortQuery;
 use Jackardios\JsonApiRequest\Values\Sort;
 
