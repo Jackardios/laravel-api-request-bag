@@ -2,11 +2,20 @@
 
 namespace Jackardios\JsonApiRequest\Tests;
 
+use Illuminate\Support\Collection;
+use Jackardios\JsonApiRequest\Enums\SortDirection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidSortQuery;
 use Jackardios\JsonApiRequest\JsonApiRequest;
+use Jackardios\JsonApiRequest\Values\Sort;
 
 class SortsTest extends TestCase
 {
+    protected function getSortsAsArraysFromRequest(JsonApiRequest $request): Collection {
+        return $request->sorts()->map(function(Sort $sort) {
+            return [$sort->getField(), $sort->getDirection()];
+        });
+    }
+
     /** @test */
     public function it_can_get_all_sort_query_params_from_the_request(): void
     {
@@ -14,9 +23,13 @@ class SortsTest extends TestCase
             'sort' => 'fooBarBaz,bar,fooBarBaz,0,-foo_bar',
         ]);
 
-        $expected = collect(['fooBarBaz', 'bar', '-foo_bar']);
+        $expected = collect([
+            ['fooBarBaz', SortDirection::ASCENDING],
+            ['bar', SortDirection::ASCENDING],
+            ['foo_bar', SortDirection::DESCENDING]
+        ]);
 
-        $this->assertEquals($expected, $request->sorts());
+        $this->assertEquals($expected, $this->getSortsAsArraysFromRequest($request));
     }
 
     /** @test */
@@ -26,9 +39,13 @@ class SortsTest extends TestCase
             'sort' => ['-fooBarBaz', 'bar', null, 'bar', false, 'fooBarBaz', '', 'foo_bar', '0'],
         ]);
 
-        $expected = collect(['-fooBarBaz', 'bar', 'foo_bar']);
+        $expected = collect([
+            ['fooBarBaz', SortDirection::DESCENDING],
+            ['bar', SortDirection::ASCENDING],
+            ['foo_bar', SortDirection::ASCENDING]
+        ]);
 
-        $this->assertEquals($expected, $request->sorts());
+        $this->assertEquals($expected, $this->getSortsAsArraysFromRequest($request));
     }
 
     /** @test */
@@ -44,9 +61,13 @@ class SortsTest extends TestCase
             'bar_baz'
         ]);
 
-        $expected = collect(['fooBarBaz', 'bar', 'foo_bar']);
+        $expected = collect([
+            ['fooBarBaz', SortDirection::ASCENDING],
+            ['bar', SortDirection::ASCENDING],
+            ['foo_bar', SortDirection::ASCENDING]
+        ]);
 
-        $this->assertEquals($expected, $request->sorts());
+        $this->assertEquals($expected, $this->getSortsAsArraysFromRequest($request));
     }
 
     /** @test */
@@ -70,12 +91,18 @@ class SortsTest extends TestCase
         config(['json-api-request.parameters.sort' => 'sorts']);
 
         $request = new JsonApiRequest([
-            'sorts' => 'fooBarBaz,bar,foo_bar,bar_baz',
+            'sorts' => 'fooBarBaz,-bar,foo_bar,bar_baz',
         ]);
 
-        $expected = collect(['fooBarBaz', 'bar', 'foo_bar', 'bar_baz']);
 
-        $this->assertEquals($expected, $request->sorts());
+        $expected = collect([
+            ['fooBarBaz', SortDirection::ASCENDING],
+            ['bar', SortDirection::DESCENDING],
+            ['foo_bar', SortDirection::ASCENDING],
+            ['bar_baz', SortDirection::ASCENDING],
+        ]);
+
+        $this->assertEquals($expected, $this->getSortsAsArraysFromRequest($request));
     }
 
     /** @test */
@@ -85,6 +112,6 @@ class SortsTest extends TestCase
 
         $expected = collect();
 
-        $this->assertEquals($expected, $request->sorts());
+        $this->assertEquals($expected, $this->getSortsAsArraysFromRequest($request));
     }
 }

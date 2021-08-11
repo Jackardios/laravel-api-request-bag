@@ -3,7 +3,9 @@
 namespace Jackardios\JsonApiRequest\Concerns;
 
 use Illuminate\Support\Collection;
+use Jackardios\JsonApiRequest\Enums\SortDirection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidSortQuery;
+use Jackardios\JsonApiRequest\Values\Sort;
 
 trait WithSorts
 {
@@ -56,18 +58,21 @@ trait WithSorts
             ->unique(function($sort) {
                 return ltrim($sort, '-');
             })
-            ->values();
+            ->values()
+            ->map(function($field) {
+                return new Sort((string)$field);
+            });
 
         return $this->requestedSorts;
     }
 
     protected function ensureAllSortsAllowed(): self
     {
-        $requestedSortNames = $this->sorts()->map(function (string $sort) {
-            return ltrim($sort, '-');
+        $requestedSorts = $this->sorts()->map(function (Sort $sort) {
+            return $sort->getField();
         });
 
-        $unknownSorts = $requestedSortNames->diff($this->allowedSorts);
+        $unknownSorts = $requestedSorts->diff($this->allowedSorts);
 
         if ($unknownSorts->isNotEmpty()) {
             throw InvalidSortQuery::sortsNotAllowed($unknownSorts, $this->allowedSorts);
