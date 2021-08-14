@@ -28,16 +28,6 @@ trait WithFilters
         return [];
     }
 
-    protected function setAllowedFiltersFromCallbackIfNotDefined(): self
-    {
-        $allowedFiltersFromCallback = $this->allowedFilters();
-        if (!($this->allowedFilters instanceof Collection) && $allowedFiltersFromCallback) {
-            $this->setAllowedFilters($allowedFiltersFromCallback);
-        }
-
-        return $this;
-    }
-
     public function setAllowedFilters($filters): self
     {
         $filters = is_array($filters) ? $filters : func_get_args();
@@ -53,16 +43,25 @@ trait WithFilters
 
     public function getAllowedFilters(): ?Collection
     {
+        if (!($this->allowedFilters instanceof Collection)) {
+            $allowedFiltersFromCallback = $this->allowedFilters();
+
+            if ($allowedFiltersFromCallback) {
+                $this->setAllowedFilters($allowedFiltersFromCallback);
+            }
+        }
+
         return $this->allowedFilters;
     }
 
     public function filters(): Collection
     {
-        $this->setAllowedFiltersFromCallbackIfNotDefined();
-
-        if ($this->requestedFilters) {
+        if ($this->requestedFilters instanceof Collection) {
             return $this->requestedFilters;
         }
+
+        // ensure all filters allowed
+        $this->getAllowedFilters();
 
         $filterParameterName = config('json-api-request.parameters.filter');
         $filterParts = $this->getRequestData($filterParameterName, []);

@@ -28,16 +28,6 @@ trait WithSorts
         return [];
     }
 
-    protected function setAllowedSortsFromCallbackIfNotDefined(): self
-    {
-        $allowedSortsFromCallback = $this->allowedSorts();
-        if (!($this->allowedSorts instanceof Collection) && $allowedSortsFromCallback) {
-            $this->setAllowedSorts($allowedSortsFromCallback);
-        }
-
-        return $this;
-    }
-
     public function setAllowedSorts($sorts): self
     {
         $sorts = is_array($sorts) ? $sorts : func_get_args();
@@ -53,16 +43,25 @@ trait WithSorts
 
     public function getAllowedSorts(): ?Collection
     {
+        if (!($this->allowedSorts instanceof Collection)) {
+            $allowedSortsFromCallback = $this->allowedSorts();
+
+            if ($allowedSortsFromCallback) {
+                $this->setAllowedSorts($allowedSortsFromCallback);
+            }
+        }
+
         return $this->allowedSorts;
     }
 
     public function sorts(): Collection
     {
-        $this->setAllowedSortsFromCallbackIfNotDefined();
-
-        if ($this->requestedSorts) {
+        if ($this->requestedSorts instanceof Collection) {
             return $this->requestedSorts;
         }
+
+        // ensure all sorts allowed
+        $this->getAllowedSorts();
 
         $sortParameterName = config('json-api-request.parameters.sort');
         $sortParts = $this->getRequestData($sortParameterName);

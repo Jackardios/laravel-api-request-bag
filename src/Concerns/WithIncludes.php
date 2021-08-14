@@ -27,16 +27,6 @@ trait WithIncludes
         return [];
     }
 
-    protected function setAllowedIncludesFromCallbackIfNotDefined(): self
-    {
-        $allowedIncludesFromCallback = $this->allowedIncludes();
-        if (!($this->allowedIncludes instanceof Collection) && $allowedIncludesFromCallback) {
-            $this->setAllowedIncludes($allowedIncludesFromCallback);
-        }
-
-        return $this;
-    }
-
     public function setAllowedIncludes($includes): self
     {
         $includes = is_array($includes) ? $includes : func_get_args();
@@ -52,16 +42,25 @@ trait WithIncludes
 
     public function getAllowedIncludes(): ?Collection
     {
+        if (!($this->allowedIncludes instanceof Collection)) {
+            $allowedIncludesFromCallback = $this->allowedIncludes();
+
+            if ($allowedIncludesFromCallback) {
+                $this->setAllowedIncludes($allowedIncludesFromCallback);
+            }
+        }
+
         return $this->allowedIncludes;
     }
 
     public function includes(): Collection
     {
-        $this->setAllowedIncludesFromCallbackIfNotDefined();
-
-        if ($this->requestedIncludes) {
+        if ($this->requestedIncludes instanceof Collection) {
             return $this->requestedIncludes;
         }
+
+        // ensure all includes allowed
+        $this->getAllowedIncludes();
 
         $includeParameterName = config('json-api-request.parameters.include');
         $includeParts = $this->getRequestData($includeParameterName);

@@ -45,22 +45,20 @@ trait WithFields
 
     public function getDefaultTable(): ?string
     {
+        if (!$this->defaultTable) {
+            $defaultTableFromCallback = $this->defaultTable();
+            if (!$defaultTableFromCallback) {
+                throw new DefaultTableIsNotDefined();
+            }
+            $this->setDefaultTable($defaultTableFromCallback);
+        }
+
         return $this->defaultTable;
     }
 
     protected function allowedFields(): array
     {
         return [];
-    }
-
-    protected function setAllowedFieldsFromCallbackIfNotDefined(): self
-    {
-        $allowedFieldsFromCallback = $this->allowedFields();
-        if (!($this->allowedFields instanceof Collection) && $allowedFieldsFromCallback) {
-            $this->setAllowedFields($allowedFieldsFromCallback);
-        }
-
-        return $this;
     }
 
     public function setAllowedFields($fields): self
@@ -79,16 +77,25 @@ trait WithFields
 
     public function getAllowedFields(): ?Collection
     {
+        if (!($this->allowedFields instanceof Collection)) {
+            $allowedFieldsFromCallback = $this->allowedFields();
+
+            if ($allowedFieldsFromCallback) {
+                $this->setAllowedFields($allowedFieldsFromCallback);
+            }
+        }
+
         return $this->allowedFields;
     }
 
     public function fields(): Collection
     {
-        $this->setAllowedFieldsFromCallbackIfNotDefined();
-
-        if ($this->requestedFields) {
+        if ($this->requestedFields instanceof Collection) {
             return $this->requestedFields;
         }
+
+        // ensure all fields allowed
+        $this->getAllowedFields();
 
         $fieldsParameterName = config('json-api-request.parameters.fields');
         $fieldsPerTable = collect($this->getRequestData($fieldsParameterName));
@@ -143,22 +150,13 @@ trait WithFields
 
     protected function prependField(string $field, ?string $table = null): string
     {
-        if (!$table) {
-            $table = $this->getDefaultTable();
-            if (!$table) {
-                $defaultTableFromCallback = $this->defaultTable();
-                if (!$defaultTableFromCallback) {
-                    throw new DefaultTableIsNotDefined();
-                }
-                $this->setDefaultTable($defaultTableFromCallback);
-            }
-        }
-
         if (Str::contains($field, '.')) {
             // Already prepended
 
             return $field;
         }
+
+        $table = $table ?? $this->getDefaultTable();
 
         return "{$table}.{$field}";
     }

@@ -27,16 +27,6 @@ trait WithAppends
         return [];
     }
 
-    protected function setAllowedAppendsFromCallbackIfNotDefined(): self
-    {
-        $allowedAppendsFromCallback = $this->allowedAppends();
-        if (!($this->allowedAppends instanceof Collection) && $allowedAppendsFromCallback) {
-            $this->setAllowedAppends($allowedAppendsFromCallback);
-        }
-
-        return $this;
-    }
-
     public function setAllowedAppends($appends): self
     {
         $appends = is_array($appends) ? $appends : func_get_args();
@@ -52,16 +42,25 @@ trait WithAppends
 
     public function getAllowedAppends(): ?Collection
     {
+        if (!($this->allowedAppends instanceof Collection)) {
+            $allowedAppendsFromCallback = $this->allowedAppends();
+
+            if ($allowedAppendsFromCallback) {
+                $this->setAllowedAppends($allowedAppendsFromCallback);
+            }
+        }
+
         return $this->allowedAppends;
     }
 
     public function appends(): Collection
     {
-        $this->setAllowedAppendsFromCallbackIfNotDefined();
-
-        if ($this->requestedAppends) {
+        if ($this->requestedAppends instanceof Collection) {
             return $this->requestedAppends;
         }
+
+        // ensure all appends allowed
+        $this->getAllowedAppends();
 
         $appendParameterName = config('json-api-request.parameters.append');
         $appendParts = $this->getRequestData($appendParameterName);
