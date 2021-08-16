@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidSortQuery;
 use Jackardios\JsonApiRequest\Values\Sort;
 
-trait WithSorts
+trait HasSorts
 {
     protected ?Collection $requestedSorts = null;
     protected ?Collection $allowedSorts = null;

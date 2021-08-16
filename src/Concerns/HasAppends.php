@@ -5,7 +5,7 @@ namespace Jackardios\JsonApiRequest\Concerns;
 use Illuminate\Support\Collection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidAppendQuery;
 
-trait WithAppends
+trait HasAppends
 {
     protected ?Collection $requestedAppends = null;
     protected ?Collection $allowedAppends = null;

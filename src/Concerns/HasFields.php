@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Jackardios\JsonApiRequest\Exceptions\InvalidFieldQuery;
 use Jackardios\JsonApiRequest\Exceptions\DefaultTableIsNotDefined;
 
-trait WithFields
+trait HasFields
 {
     protected ?Collection $requestedFields = null;
     protected ?Collection $allowedFields = null;

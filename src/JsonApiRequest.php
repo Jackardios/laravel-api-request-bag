@@ -4,19 +4,19 @@ namespace Jackardios\JsonApiRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use Jackardios\JsonApiRequest\Concerns\WithFields;
-use Jackardios\JsonApiRequest\Concerns\WithFilters;
-use Jackardios\JsonApiRequest\Concerns\WithIncludes;
-use Jackardios\JsonApiRequest\Concerns\WithAppends;
-use Jackardios\JsonApiRequest\Concerns\WithSorts;
+use Jackardios\JsonApiRequest\Concerns\HasFields;
+use Jackardios\JsonApiRequest\Concerns\HasFilters;
+use Jackardios\JsonApiRequest\Concerns\HasIncludes;
+use Jackardios\JsonApiRequest\Concerns\HasAppends;
+use Jackardios\JsonApiRequest\Concerns\HasSorts;
 
 class JsonApiRequest extends FormRequest
 {
-    use WithFields;
-    use WithIncludes;
-    use WithAppends;
-    use WithSorts;
-    use WithFilters;
+    use HasFields;
+    use HasIncludes;
+    use HasAppends;
+    use HasSorts;
+    use HasFilters;
 
     public static function fromRequest(Request $request): self
     {

@@ -5,7 +5,7 @@ namespace Jackardios\JsonApiRequest\Concerns;
 use Illuminate\Support\Collection;
 use Jackardios\JsonApiRequest\Exceptions\InvalidIncludeQuery;
 
-trait WithIncludes
+trait HasIncludes
 {
     protected ?Collection $requestedIncludes = null;
     protected ?Collection $allowedIncludes = null;

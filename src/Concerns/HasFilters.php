@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Jackardios\JsonApiRequest\Exceptions\InvalidFilterQuery;
 
-trait WithFilters
+trait HasFilters
 {
     protected ?Collection $requestedFilters = null;
     protected ?Collection $allowedFilters = null;
