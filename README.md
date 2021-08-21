@@ -265,15 +265,9 @@ if ($includes->isNotEmpty()) {
     $withs = $includes->mapWithKeys(function($table) use ($request) {
         $fields = $request->fields()->get($table) ?? [];
         
-        return [$table => $fields];
+        return [$table => fn($query) => $query->select($fields)];
     })->toArray();
     
-    // $withs is equal to
-    // [
-    //     'roles' => ['id','name','display_name']
-    //     'friends' => []
-    // ]
-
     $query->with($withs);
 }
 
